@@ -1,0 +1,26 @@
+{
+  "name": "webpack-typescript-babylonjs",
+  "version": "1.0.0",
+  "description": "Template for Webpack TypeScript and BabylonJS",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.16",
+    "css-loader": "^0.28.7",
+    "html-webpack-plugin": "^2.30.1",
+    "style-loader": "^0.18.2",
+    "ts-loader": "^2.3.6",
+    "typescript": "^2.5.2",
+    "webpack": "^3.5.6",
+    "webpack-dev-server": "^2.7.1"
+  },
+  "dependencies": {
+    "babylonjs": "^3.1.0-alpha1"
+  }
+}
