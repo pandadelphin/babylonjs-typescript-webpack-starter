@@ -1,5 +1,5 @@
 {
-  "name": "webpack-typescript-babylonjs-starter",
+  "name": "babylonjs-typescript-webpack-starter",
   "version": "1.0.0",
   "description": "Template for Webpack TypeScript and BabylonJS",
   "main": "index.js",
