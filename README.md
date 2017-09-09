@@ -1,1 +1,1 @@
-A starter template for Projects using webpack typescript and BabylonJS
+A starter template for projects that should use webpack, typescript and BabylonJS.
