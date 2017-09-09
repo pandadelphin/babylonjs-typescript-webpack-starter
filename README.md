@@ -1,4 +1,4 @@
-A starter template for projects that should use webpack, typescript and babylonjs.
+A starter template for those who want to use babylonjs with typescript and webpack.
 
 ## How to Start? ##
 
