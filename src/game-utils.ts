@@ -104,7 +104,7 @@ export class GameUtils {
         water.windForce = -15;
         water.waveHeight = 0;
         water.windDirection = new BABYLON.Vector2(1, 1);
-        water.waterColor = new BABYLON.Color3(0.1, 0.1, 0.6);
+        water.waterColor = new BABYLON.Color3(0.25, 0.88, 0.82);
         water.colorBlendFactor = 0.3;
         water.bumpHeight = 0.1;
         water.waveLength = 0.1;
