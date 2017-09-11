@@ -11,9 +11,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/es6-shim": "^0.31.35",
     "clean-webpack-plugin": "^0.1.16",
+    "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.7",
     "html-webpack-plugin": "^2.30.1",
+    "imports-loader": "^0.7.1",
     "style-loader": "^0.18.2",
     "ts-loader": "^2.3.6",
     "typescript": "^2.5.2",
@@ -21,6 +24,9 @@
     "webpack-dev-server": "^2.7.1"
   },
   "dependencies": {
-    "babylonjs": "^3.1.0-alpha1"
+    "babylonjs": "^3.1.0-alpha1",
+    "rxjs": "^5.4.3",
+    "typescript-decorate": "^1.0.0",
+    "typescript-extends": "^1.0.1"
   }
 }
