@@ -1,4 +1,6 @@
 const path = require('path');
+// Optimizes duplicates in splitted bundles 
+const webpack = require('webpack');
 // creates index.html file by a template index.ejs
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // cleans dist folder
@@ -9,7 +11,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const distFolder = "./dist";
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: {
+    vendor: ['babylonjs', 'rxjs', 'typescript-decorate', 'typescript-extends'],    
+    app: './src/index.ts'
+  },
   plugins: [
     new CleanWebpackPlugin([distFolder]),
     new HtmlWebpackPlugin({
@@ -17,7 +22,10 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: 'src/assets', to: 'assets' },
-    ])
+    ]),
+     new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor'
+    })
   ],
   devtool: 'inline-source-map',
   devServer: {
@@ -43,7 +51,7 @@ module.exports = {
     extensions: [ ".tsx", ".ts", ".js" ]
   },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, distFolder)
   }
 };

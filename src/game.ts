@@ -8,7 +8,7 @@ export class Game {
     private _scene: BABYLON.Scene;
     private _camera: BABYLON.ArcRotateCamera;
     private _light: BABYLON.Light;
-    private _rootMesh: BABYLON.AbstractMesh;
+    private _sharkMesh: BABYLON.AbstractMesh;
 
     constructor(canvasElement: string) {
         // Create canvas and engine
@@ -47,24 +47,26 @@ export class Game {
         waterMaterial.addToRenderList(ground);
 
         // create a mesh object with loaded from file
-        this._rootMesh = BABYLON.MeshBuilder.CreateBox("rootMesh", { size: 1 }, this._scene);
-        this._rootMesh.isVisible = false;
-        this._rootMesh.position.y = 0.4;
-        this._rootMesh.rotation.y = -3 * Math.PI / 4;
-        GameUtils.createMeshFromObjFile("mesh/", "mesh.obj", this._scene, new BABYLON.Vector3(1, 1, 1)) 
-            .subscribe(meshes => {
-                meshes.forEach((mesh) => {
-                    mesh.parent = this._rootMesh;
-                    waterMaterial.addToRenderList(mesh);
-                });
+        GameUtils.createShark(this._scene)
+            .subscribe(sharkMesh => {
+                this._sharkMesh = sharkMesh;   
+                this._sharkMesh.getChildren().forEach(
+                     mesh => { waterMaterial.addToRenderList(mesh) }
+                );
             });
-
     }
+
+    private time = 0;
 
     animate(): void {
         // run the render loop
         this._engine.runRenderLoop(() => {
             this._scene.render();
+            let deltaTime: number = (1 / this._engine.getFps());         
+            if(this._sharkMesh && this._sharkMesh.material)   {
+                this.time += 3 * deltaTime;
+                (<BABYLON.ShaderMaterial>this._sharkMesh.material).setFloat("time", this.time);            
+            }
         });
 
         // the canvas/window resize event handler

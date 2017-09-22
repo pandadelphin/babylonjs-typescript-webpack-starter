@@ -1,6 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import { Observable } from 'rxjs';
-
+import { SHADER_WAVE_VERTEX, SHADER_WAVE_FRAGMENT } from './shader-waver';
 
 export class GameUtils {
 
@@ -111,4 +111,23 @@ export class GameUtils {
 
         return water
     }
+
+    public static createShark(scene: BABYLON.Scene): Observable<BABYLON.AbstractMesh> {
+        // create a mesh object with loaded from file
+        let rootMesh = BABYLON.MeshBuilder.CreateBox("rootMesh", { size: 1 }, scene);
+        rootMesh.isVisible = false;
+        rootMesh.position.y = 0.4;
+        rootMesh.rotation.y = -3 * Math.PI / 4;
+
+        return new Observable(observer => {
+            GameUtils.createMeshFromObjFile("mesh/", "mesh.obj", scene, new BABYLON.Vector3(1, 1, 1))
+                .subscribe(meshes => {
+                    meshes.forEach((mesh) => {
+                        mesh.parent = rootMesh;
+                    });
+                    observer.next(rootMesh);
+                });
+        });
+    }
+
 }
