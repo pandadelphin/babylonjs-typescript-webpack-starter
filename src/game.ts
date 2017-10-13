@@ -10,7 +10,7 @@ export class Game {
     private _camera: BABYLON.ArcRotateCamera;
     private _light: BABYLON.Light;
     private _sharkMesh: BABYLON.AbstractMesh;
-    private _time: number = 0;
+    private _sharkAnimationTime = 0;
     private _swim: boolean = false;
 
     constructor(canvasElement: string) {
@@ -69,8 +69,7 @@ export class Game {
     animate(): void {
         this._scene.registerBeforeRender(() => {
             let deltaTime: number = (1 / this._engine.getFps());
-            this._time += deltaTime;
-            this.animateShark();
+            this.animateShark(deltaTime);
         });
 
         // run the render loop
@@ -84,8 +83,9 @@ export class Game {
         });
     }
 
-    animateShark(): void {
+    animateShark(deltaTime: number): void {
         if (this._sharkMesh && this._swim) {
+            this._sharkAnimationTime += deltaTime;            
             this._sharkMesh.getChildren().forEach(
                 mesh => {
                     let vertexData = BABYLON.VertexData.ExtractFromMesh(mesh as BABYLON.Mesh);
@@ -93,7 +93,7 @@ export class Game {
                     let numberOfPoints = positions.length / 3;
                     for (let i = 0; i < numberOfPoints; i++) {
                         positions[i * 3] +=
-                            Math.sin(.2 * positions[i * 3 + 2] + this._time * 3) * .1;
+                            Math.sin(.2 * positions[i * 3 + 2] + this._sharkAnimationTime * 3) * .1;
                     }
                     vertexData.applyToMesh(mesh as BABYLON.Mesh);
                 }
