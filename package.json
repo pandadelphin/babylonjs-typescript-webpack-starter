@@ -24,9 +24,10 @@
     "webpack-dev-server": "^2.7.1"
   },
   "dependencies": {
-    "babylonjs": "^3.1.0-alpha3.4",
-    "rxjs": "^5.4.3",
-    "typescript-decorate": "^1.0.0",
-    "typescript-extends": "^1.0.1"
+    "babylonjs": "^3.1.0-alpha3.5",
+    "babylonjs-gui": "^3.1.0-alpha3.5",
+    "babylonjs-loaders": "^3.1.0-alpha3.5",
+    "babylonjs-materials": "^3.1.0-alpha3.5",
+    "rxjs": "^5.4.3"
   }
 }

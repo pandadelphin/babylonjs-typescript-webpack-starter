@@ -1,20 +1,74 @@
 import * as BABYLON from 'babylonjs';
-import { Observable } from 'rxjs';
-import { SHADER_WAVE_VERTEX, SHADER_WAVE_FRAGMENT } from './shader-waver';
+import * as GUI from 'babylonjs-gui';
+import {Observable} from 'rxjs';
 
 export class GameUtils {
 
     /**
+     * Creates a basic ground
+     * @param scene
+     */
+    public static createGround(scene: BABYLON.Scene): BABYLON.Mesh {
+        // Ground
+        let groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
+        groundMaterial.diffuseTexture = new BABYLON.Texture("./assets/texture/ground.jpg", scene);
+        //groundMaterial.diffuseTexture.uScale = groundMaterial.diffuseTexture.vScale = 4;
+        let ground = BABYLON.Mesh.CreateGround("ground", 512, 512, 32, scene, false);
+        ground.position.y = -1;
+        ground.material = groundMaterial;
+
+        return ground;
+    }
+
+    /**
+     * Creates a second ground and adds a watermaterial to it
+     * @param scene
+     */
+    public static createWater(scene: BABYLON.Scene): BABYLON.WaterMaterial {
+        // Water
+        let waterMesh = BABYLON.Mesh.CreateGround("waterMesh", 512, 512, 32, scene, false);
+        let waterMaterial = GameUtils.createWaterMaterial("water", "./assets/texture/waterbump.png", scene);
+        waterMesh.material = waterMaterial;
+        waterMesh.position.y = 4;
+
+        return waterMaterial;
+    }
+
+    /**
+     * Creates a BABYLONJS GUI with a single Button
+     */
+    public static createGui(btnText: string, btnClicked: (button: GUI.Button) => void) {
+
+        let guiTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+        let btnTest = GUI.Button.CreateSimpleButton("but1", btnText);
+        btnTest.width = "150px";
+        btnTest.height = "40px";
+        btnTest.color = "white";
+        btnTest.background = "grey";
+        btnTest.onPointerUpObservable.add(() => {
+            if (btnClicked) {
+                btnClicked(btnTest);
+            }
+        });
+        btnTest.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        btnTest.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        btnTest.left = 12;
+        btnTest.top = 12;
+
+        guiTexture.addControl(btnTest);
+    }
+
+    /**
      * Returns Observable of mesh array, which are loaded from a file.
      * After mesh importing all meshes become given scaling, position and rotation.
-     * @param fileName 
-     * @param scene 
-     * @param scaling 
-     * @param position 
-     * @param rotationQuaternion 
+     * @param fileName
+     * @param scene
+     * @param scaling
+     * @param position
+     * @param rotationQuaternion
      */
     public static createMeshFromObjFile(folderName: string, fileName: string, scene: BABYLON.Scene,
-        scaling?: BABYLON.Vector3, position?: BABYLON.Vector3, rotationQuaternion?: BABYLON.Quaternion): Observable<BABYLON.AbstractMesh[]> {
+                                        scaling?: BABYLON.Vector3, position?: BABYLON.Vector3, rotationQuaternion?: BABYLON.Quaternion): Observable<BABYLON.AbstractMesh[]> {
 
         if (!fileName) {
             return Observable.throw("GameUtils.createMeshFromObjFile: parameter fileName is empty");
@@ -33,8 +87,8 @@ export class GameUtils {
         return Observable.create(observer => {
             BABYLON.SceneLoader.ImportMesh(null, assetsFolder, fileName, scene,
                 (meshes: BABYLON.AbstractMesh[],
-                    particleSystems: BABYLON.ParticleSystem[],
-                    skeletons: BABYLON.Skeleton[]) => {
+                 particleSystems: BABYLON.ParticleSystem[],
+                 skeletons: BABYLON.Skeleton[]) => {
                     meshes.forEach((mesh) => {
                         mesh.position = position;
                         mesh.rotationQuaternion = rotationQuaternion;
@@ -48,9 +102,9 @@ export class GameUtils {
 
     /**
      * Creates a new skybox with the picttures under fileName.
-     * @param name 
-     * @param fileName 
-     * @param scene 
+     * @param name
+     * @param fileName
+     * @param scene
      */
     public static createSkybox(name: string, fileName: string, scene: BABYLON.Scene): BABYLON.Mesh {
         if (!name) {
@@ -80,9 +134,9 @@ export class GameUtils {
 
     /**
      * Creates a new WaterMaterial Object with a given name. The noiseFile descrips the noise in the water,
-     * @param name 
-     * @param noiseFile 
-     * @param scene 
+     * @param name
+     * @param noiseFile
+     * @param scene
      */
     public static createWaterMaterial(name: string, noiseFile: string, scene: BABYLON.Scene): BABYLON.WaterMaterial {
         if (!name) {
@@ -112,9 +166,13 @@ export class GameUtils {
         return water
     }
 
+    /**
+     * Loads a shark model from .obj file and adds it scene.
+     * @param scene
+     */
     public static createShark(scene: BABYLON.Scene): Observable<BABYLON.AbstractMesh> {
         // create a mesh object with loaded from file
-        let rootMesh = BABYLON.MeshBuilder.CreateBox("rootMesh", { size: 1 }, scene);
+        let rootMesh = BABYLON.MeshBuilder.CreateBox("rootMesh", {size: 1}, scene);
         rootMesh.isVisible = false;
         rootMesh.position.y = 0.4;
         rootMesh.rotation.y = -3 * Math.PI / 4;
