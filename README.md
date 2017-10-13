@@ -8,3 +8,4 @@ A starter template for those who want to use the famous javascript 3D game engin
 npm install 
 npm start
 ```
+3. Open Browser and Enter [http://localhost:8080](http://localhost:8080)
