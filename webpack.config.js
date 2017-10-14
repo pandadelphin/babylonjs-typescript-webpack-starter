@@ -12,7 +12,7 @@ const distFolder = "./dist";
 
 module.exports = {
   entry: {
-    vendor: ['rxjs', 'babylonjs', 'babylonjs-materials', 'babylonjs-loaders'],    
+    vendor: ['rxjs', 'babylonjs', 'babylonjs-materials', 'babylonjs-loaders', 'babylonjs-gui'],    
     app: './src/index.ts'
   },
   plugins: [
