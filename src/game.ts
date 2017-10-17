@@ -60,6 +60,10 @@ export class Game {
                     textControl.text = "Start Swimming";
                 }
             });
+
+        // Physics engine also works
+        let gravity = new BABYLON.Vector3(0, -0.9, 0);
+        this._scene.enablePhysics(gravity, new BABYLON.CannonJSPlugin());
     }
 
 
@@ -93,7 +97,7 @@ export class Game {
                     let numberOfPoints = positions.length / 3;
                     for (let i = 0; i < numberOfPoints; i++) {
                         positions[i * 3] +=
-                            Math.sin(.2 * positions[i * 3 + 2] + this._sharkAnimationTime * 3) * .1;
+                            Math.sin(0.2 * positions[i * 3 + 2] + this._sharkAnimationTime * 3) * 0.1;
                     }
                     vertexData.applyToMesh(mesh as BABYLON.Mesh);
                 }

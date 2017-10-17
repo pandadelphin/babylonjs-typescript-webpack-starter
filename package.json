@@ -28,6 +28,7 @@
     "babylonjs-gui": "^3.1.0-alpha3.5",
     "babylonjs-loaders": "^3.1.0-alpha3.5",
     "babylonjs-materials": "^3.1.0-alpha3.5",
+    "cannon": "^0.6.2",
     "rxjs": "^5.4.3"
   }
 }
