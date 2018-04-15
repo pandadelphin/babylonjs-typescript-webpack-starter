@@ -11,10 +11,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const distFolder = "./dist";
 
 module.exports = {
-  entry: {
-    vendor: ['rxjs', 'cannon', 'babylonjs', 'babylonjs-materials', 'babylonjs-loaders', 'babylonjs-gui'],    
-    app: './src/index.ts'
-  },
+  mode: 'development',
+  entry: './src/index.ts',
   plugins: [
     new CleanWebpackPlugin([distFolder]),
     new HtmlWebpackPlugin({
@@ -22,10 +20,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: 'src/assets', to: 'assets' },
-    ]),
-     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
-    })
+    ])
   ],
   devtool: 'inline-source-map',
   devServer: {
@@ -46,6 +41,17 @@ module.exports = {
         ]
       }
     ]
+  },
+  optimization: {
+    splitChunks: {
+        cacheGroups: {
+            commons: {
+                test: /[\\/]node_modules[\\/]/,
+                name: "vendors",
+                chunks: "all"
+            }
+        }
+    }
   },
   resolve: {
     extensions: [ ".tsx", ".ts", ".js" ]
