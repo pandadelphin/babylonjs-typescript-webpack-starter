@@ -14,7 +14,7 @@ module.exports = {
   mode: 'development',
   entry: './src/index.ts',
   plugins: [
-    new CleanWebpackPlugin([distFolder]),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/index.ejs'
     }),
