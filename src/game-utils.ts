@@ -1,6 +1,7 @@
 import * as BABYLON from 'babylonjs';
 import * as GUI from 'babylonjs-gui';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export class GameUtils {
 
@@ -35,11 +36,20 @@ export class GameUtils {
     }
 
     /**
-     * Creates a BABYLONJS GUI with a single Button
+     * Creates a Gui Texture
      */
-    public static createGui(btnText: string, btnClicked: (button: GUI.Button) => void) {
+    public static createGUI() {
+        return GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    }
 
-        let guiTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    /**
+     * Creates a Button that tells the Shark to swim or not
+     * @param guiTexture 
+     * @param btnText 
+     * @param btnClicked 
+     */
+    public static createButtonSwim(guiTexture: GUI.AdvancedDynamicTexture, btnText: string, btnClicked: (button: GUI.Button) => void) {
+
         let btnTest = GUI.Button.CreateSimpleButton("but1", btnText);
         btnTest.width = "150px";
         btnTest.height = "40px";
@@ -58,6 +68,68 @@ export class GameUtils {
         guiTexture.addControl(btnTest);
     }
 
+    public static createVerticalLine(scene: BABYLON.Scene, position: BABYLON.Vector2) {
+        //Array of points to construct lines
+        var myPoints = [
+            new BABYLON.Vector3(position.x, 0, position.y),
+            new BABYLON.Vector3(position.x, 100, position.y),
+        ];
+        //Create lines 
+        var lines = BABYLON.MeshBuilder.CreateLines("lines", {points: myPoints}, scene); 
+    }
+ 
+    /**
+     * 
+     * @param guiTexture 
+     */
+    public static createCoordinatesText(guiTexture: GUI.AdvancedDynamicTexture): { txtX: GUI.TextBlock, txtY: GUI.TextBlock, txtZ: GUI.TextBlock } {
+        let txtX = new GUI.TextBlock();
+        txtX.height = "20px";
+        txtX.width = "500px";
+        txtX.fontSize = 20;
+        txtX.text = "X: ";
+        txtX.textHorizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        txtX.textVerticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        txtX.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        txtX.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        txtX.left = 20;
+        txtX.top = 60;
+
+        let txtY = new GUI.TextBlock();
+        txtY.height = "20px";
+        txtY.width = "500px";
+        txtY.fontSize = 20;
+        txtY.text = "Y: ";
+        txtY.textHorizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        txtY.textVerticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        txtY.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        txtY.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        txtY.left = 20;
+        txtY.top = 90;
+        
+        let txtZ = new GUI.TextBlock();
+        txtZ.height = "20px";
+        txtZ.width = "500px";
+        txtZ.fontSize = 20;
+        txtZ.text = "Z: ";
+        txtZ.textHorizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        txtZ.textVerticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        txtZ.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        txtZ.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        txtZ.left = 20;
+        txtZ.top = 120;
+        
+        guiTexture.addControl(txtX);
+        guiTexture.addControl(txtY);
+        guiTexture.addControl(txtZ);
+
+        return {
+            txtX: txtX,
+            txtY: txtY,
+            txtZ: txtZ
+        }
+    }
+
     /**
      * Returns Observable of mesh array, which are loaded from a file.
      * After mesh importing all meshes become given scaling, position and rotation.
@@ -74,7 +146,7 @@ export class GameUtils {
             return Observable.throw("GameUtils.createMeshFromObjFile: parameter fileName is empty");
         }
         if (!scene) {
-            return Observable.throw("GameUtils.createMeshFromObjFile: parameter fileName is empty");
+            return Observable.throw("GameUtils.createMeshFromObjFile: parameter scene is empty");
         }
 
         if (!folderName) folderName = "";
@@ -96,6 +168,7 @@ export class GameUtils {
                     });
                     console.log("Imported Mesh: " + fileName);
                     observer.next(meshes);
+                    observer.complete();
                 });
         });
     }
@@ -174,18 +247,18 @@ export class GameUtils {
         // create a mesh object with loaded from file
         let rootMesh = BABYLON.MeshBuilder.CreateBox("rootMesh", {size: 1}, scene);
         rootMesh.isVisible = false;
-        rootMesh.position.y = 0.4;
+        rootMesh.position = new BABYLON.Vector3(0, 0.4, 0);
         rootMesh.rotation.y = -3 * Math.PI / 4;
 
-        return new Observable(observer => {
-            GameUtils.createMeshFromObjFile("mesh/", "mesh.obj", scene, new BABYLON.Vector3(1, 1, 1))
-                .subscribe(meshes => {
-                    meshes.forEach((mesh) => {
-                        mesh.parent = rootMesh;
-                    });
-                    observer.next(rootMesh);
-                });
-        });
+        return GameUtils.createMeshFromObjFile("mesh/", "mesh.obj", scene, new BABYLON.Vector3(1, 1, 1))
+                .pipe(
+                    map(meshes => {
+                        meshes.forEach((mesh) => {
+                            mesh.parent = rootMesh;
+                        });
+                        return rootMesh;
+                    })
+                );
     }
 
 }
