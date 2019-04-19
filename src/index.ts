@@ -8,5 +8,9 @@ window.addEventListener('DOMContentLoaded', () => {
   window.CANNON = CANNON;
   let game = new Game('renderCanvas');
   game.createScene();
-  game.animate();
+  // game.animate();
+
+  let game2 = new Game('renderCanvas2');
+  game2.createScene();
+  // game2.animate();
 });

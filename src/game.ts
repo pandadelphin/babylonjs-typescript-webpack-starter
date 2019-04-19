@@ -1,6 +1,7 @@
 import { GameUtils } from './game-utils';
 import * as BABYLON from 'babylonjs';
 import * as GUI from 'babylonjs-gui';
+import { Shark } from './shark';
 
 export class Game {
 
@@ -9,10 +10,12 @@ export class Game {
     private _scene: BABYLON.Scene;
     private _camera: BABYLON.ArcRotateCamera;
     private _light: BABYLON.Light;
-    private _sharkMesh: BABYLON.AbstractMesh;
-    private _sharkAnimationTime = 0;
-    private _swim: boolean = false;
+    // private _sharkMesh: BABYLON.AbstractMesh;
+    // private _sharkAnimationTime = 0;
+    // private _swim: boolean = false;
     private _txtCoordinates: { txtX: GUI.TextBlock, txtY: GUI.TextBlock, txtZ: GUI.TextBlock } = null;
+
+    private _shark: any;
 
     constructor(canvasElement: string) {
         // Create canvas and engine
@@ -39,29 +42,22 @@ export class Game {
         let waterMaterial = GameUtils.createWater(this._scene);
         waterMaterial.addToRenderList(skybox);
         waterMaterial.addToRenderList(ground);
-        // create a shark mesh from a .obj file
-        GameUtils.createShark(this._scene)
-            .subscribe(sharkMesh => {
-                this._sharkMesh = sharkMesh;
-                this._sharkMesh.getChildren().forEach(
-                    mesh => {
-                        waterMaterial.addToRenderList(mesh);
-                    }
-                );
-            });
+
+        this._shark = new Shark(this._engine, this._scene);
+        this._shark.createShark(this._scene, waterMaterial);
         // finally the new ui
         let guiTexture = GameUtils.createGUI();
-        
+
         // Button to start shark animation
         GameUtils.createButtonSwim(guiTexture, "Start Swimming",
             (btn) => {
                 let textControl = btn.children[0] as GUI.TextBlock;
-                this._swim = !this._swim;
-                if (this._swim) {
+                this._shark._swim = !this._shark._swim;
+                if (this._shark._swim) {
                     textControl.text = "Stop Swimming";
                 }
                 else {
-                    this._sharkAnimationTime = 0;
+                    this._shark._sharkAnimationTime = 0;
                     textControl.text = "Start Swimming";
                 }
             });
@@ -72,6 +68,10 @@ export class Game {
         // Physics engine also works
         let gravity = new BABYLON.Vector3(0, -0.9, 0);
         this._scene.enablePhysics(gravity, new BABYLON.CannonJSPlugin());
+
+
+        this.animate();
+
     }
 
 
@@ -79,14 +79,10 @@ export class Game {
      * Starts the animation loop.
      */
     animate(): void {
-        this._scene.registerBeforeRender(() => {
-            let deltaTime: number = (1 / this._engine.getFps());
-            this.animateShark(deltaTime);
-        });
-
         // run the render loop
         this._engine.runRenderLoop(() => {
             this._scene.render();
+            this.updateCoordinateTexture(this._shark._firstVertex)
         });
 
         // the canvas/window resize event handler
@@ -95,45 +91,9 @@ export class Game {
         });
     }
 
-    animateShark(deltaTime: number): void {
-        this.debugFirstMeshCoordinate(this._sharkMesh as BABYLON.Mesh);
-        if (this._sharkMesh && this._swim) {
-            this._sharkAnimationTime += 0.01;
-            this._sharkMesh.getChildren().forEach(
-                mesh => {
-                    let realMesh = <BABYLON.Mesh> mesh;
-                    let vertexData = BABYLON.VertexData.ExtractFromMesh(realMesh);
-                    let positions = vertexData.positions;
-                    let numberOfPoints = positions.length / 3;
-                    for (let i = 0; i < numberOfPoints; i++) {
-                        let vertex = new BABYLON.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
-                        vertex.x += (Math.sin(0.15 * vertex.z + this._sharkAnimationTime * 4 - 1.6) * 0.05);
-                        positions[i * 3] = vertex.x;
-                        
-                    }
-                    vertexData.applyToMesh(mesh as BABYLON.Mesh);
-                }
-            );
-        }
-    }
-
-    /**
-     * Prints the coordinates of the first vertex of a mesh
-     */
-    public debugFirstMeshCoordinate(mesh: BABYLON.Mesh) {
-        if(!mesh || !mesh.getChildren()) {
-            return;
-        }
-        let firstMesh = (mesh.getChildren()[0] as BABYLON.Mesh) 
-        let vertexData = BABYLON.VertexData.ExtractFromMesh(firstMesh);
-        let positions = vertexData.positions;
-        let firstVertex = new BABYLON.Vector3(positions[0], positions[1], positions[3]);
-        this.updateCoordinateTexture(firstVertex);
-    }
-
     /**
      * Prints the given Vector3
-     * @param coordinates 
+     * @param coordinates
      */
     public updateCoordinateTexture(coordinates: BABYLON.Vector3) {
         if(!coordinates) {
