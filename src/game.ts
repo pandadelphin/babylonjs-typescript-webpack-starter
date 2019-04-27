@@ -36,6 +36,7 @@ export class Game {
         this._light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), this._scene);
         // create the skybox
         let skybox = GameUtils.createSkybox("skybox", "./assets/texture/skybox/TropicalSunnyDay", this._scene);
+
         // creates the sandy ground
         let ground = GameUtils.createGround(this._scene);
         // creates the watermaterial and adds the relevant nodes to the renderlist

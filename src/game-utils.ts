@@ -203,6 +203,7 @@ export class GameUtils {
         skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
         skyboxMaterial.disableLighting = true;
         skybox.material = skyboxMaterial;
+        return skybox;
     }
 
     /**
