@@ -1,18 +1,19 @@
 import { GameUtils } from './game-utils';
 import { Shark } from './shark';
 import * as GUI from 'babylonjs-gui';
+import { Scene } from './scene';
 
 export class Gui {
 
   private _shark: Shark;
   public guiTexture: GUI.AdvancedDynamicTexture;
 
-  constructor (shark: Shark) {
+  constructor (shark: Shark, scene: Scene) {
     console.log(shark);
     this._shark = shark;
 
     // finally the new ui
-    this.guiTexture = GameUtils.createGUI();
+    this.guiTexture = GameUtils.createGUI(scene);
 
     // Button to start shark animation
     GameUtils.createButtonSwim(this.guiTexture, "Start Swimming",

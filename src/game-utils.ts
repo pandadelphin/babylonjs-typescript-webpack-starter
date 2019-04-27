@@ -38,8 +38,8 @@ export class GameUtils {
     /**
      * Creates a Gui Texture
      */
-    public static createGUI() {
-        return GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    public static createGUI(scene) {
+        return GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"+Math.random());
     }
 
     /**

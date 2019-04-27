@@ -39,11 +39,11 @@ export class World {
       groundOrNot ? waterMaterial.addToRenderList(ground) : null;
 
       this._shark = new Shark(this.sceneInstance.renderCanvas.engine, this.sceneInstance.scene);
-
+      
       this._shark.createShark(this.sceneInstance.scene, waterMaterial);
 
 
-      this.gui = new Gui(this._shark);
+      this.gui = new Gui(this._shark, this.sceneInstance);
 
 
       // Debug Text for Shark coordinates
