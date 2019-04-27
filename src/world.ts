@@ -15,7 +15,7 @@ export class World {
   constructor(sceneInstance: Scene, groundOrNot: boolean, sky: boolean) {
       this.sceneInstance = sceneInstance;
 
-      
+
       // create a basic light, aiming 0,1,0 - meaning, to the sky
       this._light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(0, 1, 0), this.sceneInstance.scene);
 
