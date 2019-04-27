@@ -3,14 +3,12 @@ import * as GUI from 'babylonjs-gui';
 import { GameUtils } from './game-utils';
 import { Scene } from './scene';
 import { Shark } from './shark';
-import { RenderCanvas } from './RenderCanvas';
 
 export class World {
   private _light: BABYLON.Light;
   private _shark: any;
 
   public sceneInstance: Scene;
-  public renderCanvas: RenderCanvas;
 
   constructor(sceneInstance: Scene) {
       this.sceneInstance = sceneInstance;
@@ -58,17 +56,16 @@ export class World {
   /**
    * Starts the animation loop.
    */
-  animate(renderCanvas: RenderCanvas): void {
-      this.renderCanvas = renderCanvas;
+  animate(): void {
       // run the render loop
-      this.renderCanvas.engine.runRenderLoop(() => {
+      this.sceneInstance.renderCanvas.engine.runRenderLoop(() => {
           this.sceneInstance.scene.render();
           // this.updateCoordinateTexture(this._shark._firstVertex)
       });
 
       // the canvas/window resize event handler
       window.addEventListener('resize', () => {
-          this.renderCanvas.engine.resize();
+          this.sceneInstance.renderCanvas.engine.resize();
       });
   }
 

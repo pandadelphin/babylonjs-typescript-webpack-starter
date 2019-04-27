@@ -32,7 +32,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // Fill world
   let world = new World(scene3);
 
-  world.animate(renderCanvas3);
+  world.animate();
 
 
 });
