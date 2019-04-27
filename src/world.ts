@@ -3,11 +3,14 @@ import * as GUI from 'babylonjs-gui';
 import { GameUtils } from './game-utils';
 import { Scene } from './scene';
 import { Shark } from './shark';
+import { Gui } from './gui';
 
 export class World {
   private _light: BABYLON.Light;
   private _shark: any;
   private _txtCoordinates: { txtX: GUI.TextBlock, txtY: GUI.TextBlock, txtZ: GUI.TextBlock } = null;
+
+  private gui: Gui;
 
   public sceneInstance: Scene;
 
@@ -39,25 +42,12 @@ export class World {
 
       this._shark.createShark(this.sceneInstance.scene, waterMaterial);
 
-      // finally the new ui
-      let guiTexture = GameUtils.createGUI();
 
-      // Button to start shark animation
-      GameUtils.createButtonSwim(guiTexture, "Start Swimming",
-          (btn) => {
-              let textControl = btn.children[0] as GUI.TextBlock;
-              this._shark._swim = !this._shark._swim;
-              if (this._shark._swim) {
-                  textControl.text = "Stop Swimming";
-              }
-              else {
-                  this._shark._sharkAnimationTime = 0;
-                  textControl.text = "Start Swimming";
-              }
-          });
+      this.gui = new Gui(this._shark);
+
 
       // Debug Text for Shark coordinates
-      this._txtCoordinates = GameUtils.createCoordinatesText(guiTexture);
+      this._txtCoordinates = GameUtils.createCoordinatesText(this.gui.guiTexture);
 
       // Physics engine also works
       let gravity = new BABYLON.Vector3(0, -0.9, 0);
