@@ -8,7 +8,6 @@ import { Gui } from './gui';
 export class World {
   private _light: BABYLON.Light;
   private _shark: any;
-  private _txtCoordinates: { txtX: GUI.TextBlock, txtY: GUI.TextBlock, txtZ: GUI.TextBlock } = null;
 
   private gui: Gui;
 
@@ -40,14 +39,9 @@ export class World {
 
       this._shark = new Shark(this.sceneInstance.renderCanvas.engine, this.sceneInstance.scene, waterMaterial);
 
-      // this._shark.createShark(this.sceneInstance.scene, waterMaterial);
-
 
       this.gui = new Gui(this._shark, this.sceneInstance);
 
-
-      // Debug Text for Shark coordinates
-      this._txtCoordinates = GameUtils.createCoordinatesText(this.gui.guiTexture);
 
       // Physics engine also works
       let gravity = new BABYLON.Vector3(0, -0.9, 0);
@@ -64,26 +58,13 @@ export class World {
       // run the render loop
       this.sceneInstance.renderCanvas.engine.runRenderLoop(() => {
           this.sceneInstance.scene.render();
-          this.updateCoordinateTexture(this._shark._firstVertex)
+          // this.updateCoordinateTexture(this._shark._firstVertex)
+          this.gui.updateCoordinateTexture(this._shark._firstVertex);
       });
 
       // the canvas/window resize event handler
       window.addEventListener('resize', () => {
           this.sceneInstance.renderCanvas.engine.resize();
       });
-  }
-
-
-  /**
-   * Prints the given Vector3
-   * @param coordinates
-   */
-  public updateCoordinateTexture(coordinates: BABYLON.Vector3) {
-      if(!coordinates) {
-          return;
-      }
-      this._txtCoordinates.txtX.text = "X: " + coordinates.x;
-      this._txtCoordinates.txtY.text = "Y: " + coordinates.y;
-      this._txtCoordinates.txtZ.text = "Z: " + coordinates.z;
   }
 }

@@ -6,6 +6,8 @@ import { Scene } from './scene';
 export class Gui {
 
   private _shark: Shark;
+  private _txtCoordinates: { txtX: GUI.TextBlock, txtY: GUI.TextBlock, txtZ: GUI.TextBlock } = null;
+
   public guiTexture: GUI.AdvancedDynamicTexture;
 
   constructor (shark: Shark, scene: Scene) {
@@ -29,6 +31,20 @@ export class Gui {
             }
         });
 
+      // Debug Text for Shark coordinates
+    this._txtCoordinates = GameUtils.createCoordinatesText(this.guiTexture);
+  }
 
+  /**
+   * Prints the given Vector3
+   * @param coordinates
+   */
+  public updateCoordinateTexture(coordinates: BABYLON.Vector3) {
+      if(!coordinates) {
+          return;
+      }
+      this._txtCoordinates.txtX.text = "X: " + coordinates.x;
+      this._txtCoordinates.txtY.text = "Y: " + coordinates.y;
+      this._txtCoordinates.txtZ.text = "Z: " + coordinates.z;
   }
 }
