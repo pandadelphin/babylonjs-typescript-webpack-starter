@@ -6,8 +6,6 @@ import { RenderCanvas } from './RenderCanvas';
 import { Scene } from './scene';
 import { Camera } from './camera';
 import { World } from './world';
-import { GameUtils } from './game-utils';
-import * as GUI from 'babylonjs-gui';
 import { RenderLoop } from './RenderLoop';
 import { Shark } from './shark';
 import { Gui } from './gui';

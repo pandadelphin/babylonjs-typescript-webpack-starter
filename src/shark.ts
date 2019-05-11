@@ -17,10 +17,10 @@ export class Shark {
         this.animateShark(deltaTime);
     });
     this._waterMaterial = waterMaterial;
-    this.createShark(scene, waterMaterial);
+    this.createShark(scene);
   }
 
-  createShark (scene: Scene, waterMaterial: WaterMaterial) {
+  createShark (scene: Scene) {
     // create a shark mesh from an obj file
     GameUtils.createShark(scene)
         .subscribe(sharkMesh => {
