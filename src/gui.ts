@@ -11,10 +11,9 @@ export class Gui {
   public guiTexture: GUI.AdvancedDynamicTexture;
 
   constructor (shark: Shark, scene: Scene) {
-    console.log(shark);
     this._shark = shark;
 
-    // finally the new ui
+    // create new gui
     this.guiTexture = GameUtils.createGUI(scene);
 
     // Button to start shark animation

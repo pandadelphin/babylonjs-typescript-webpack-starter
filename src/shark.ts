@@ -8,6 +8,7 @@ export class Shark {
   public _swim: boolean = false;
   public _sharkAnimationTime = 0;
   public _firstVertex: any;
+  public _waterMaterial: WaterMaterial;
 
   constructor (engine: Engine, scene: Scene, waterMaterial: WaterMaterial) {
     scene.registerBeforeRender(() => {
@@ -15,6 +16,7 @@ export class Shark {
         this.debugFirstMeshCoordinate(this._sharkMesh as BABYLON.Mesh);
         this.animateShark(deltaTime);
     });
+    this._waterMaterial = waterMaterial;
     this.createShark(scene, waterMaterial);
   }
 
@@ -25,7 +27,7 @@ export class Shark {
             this._sharkMesh = sharkMesh;
             this._sharkMesh.getChildren().forEach(
                 mesh => {
-                    waterMaterial.addToRenderList(mesh);
+                    this._waterMaterial.addToRenderList(mesh);
                 }
             );
         });

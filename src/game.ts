@@ -6,9 +6,10 @@ import { World } from './world';
 export class Game {
 
     private renderCanvas: RenderCanvas;
-    private renderScene: Scene;
     private camera: Camera;
-    private world: World;
+    
+    public renderScene: Scene;
+    public world: World;
 
     constructor(canvasElement: string) {
         // Create canvas and engine
