@@ -37,31 +37,10 @@ export class World {
         this.waterMaterial.addToRenderList(ground)
      }
 
-      // this._shark = new Shark(this.sceneInstance.renderCanvas.engine, this.sceneInstance.scene, waterMaterial);
-      //
-      // this.gui = new Gui(this._shark, this.sceneInstance);
-
       // Physics engine also works
       let gravity = new BABYLON.Vector3(0, -0.9, 0);
       this.sceneInstance.scene.enablePhysics(gravity, new BABYLON.CannonJSPlugin());
 
-      // this.animate();
   }
 
-  /**
-   * Starts the animation loop.
-   */
-  // animate(): void {
-  //     // run the render loop
-  //     this.sceneInstance.renderCanvas.engine.runRenderLoop(() => {
-  //         this.sceneInstance.scene.render();
-  //         // this.updateCoordinateTexture(this._shark._firstVertex)
-  //         // this.gui.updateCoordinateTexture(this._shark._firstVertex);
-  //     });
-  //
-  //     // the canvas/window resize event handler
-  //     window.addEventListener('resize', () => {
-  //         this.sceneInstance.renderCanvas.engine.resize();
-  //     });
-  // }
 }

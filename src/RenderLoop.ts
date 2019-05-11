@@ -17,10 +17,9 @@ export class RenderLoop {
   animate(): void {
       // run the render loop
       this.sceneInstance.renderCanvas.engine.runRenderLoop(() => {
-          this.sceneInstance.scene.render();          
+          this.sceneInstance.scene.render();
           if (this.renderCallback) {
             this.renderCallback();
-            // this.gui.updateCoordinateTexture(this._shark._firstVertex);
           }
       });
 

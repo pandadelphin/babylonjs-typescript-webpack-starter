@@ -10,6 +10,7 @@ import { GameUtils } from './game-utils';
 import * as GUI from 'babylonjs-gui';
 import { RenderLoop } from './RenderLoop';
 import { Shark } from './shark';
+import { Gui } from './gui';
 // import { View } from './view';
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -27,10 +28,19 @@ window.addEventListener('DOMContentLoaded', () => {
   let object1 = new Shark(game.renderScene.renderCanvas.engine, game.renderScene.scene, game.world.waterMaterial);
   let object2 = new Shark(game2.renderScene.renderCanvas.engine, game2.renderScene.scene, game2.world.waterMaterial);
 
+  // Gui
+  let gui = new Gui(object1, game.renderScene);
+  let gui2 = new Gui(object2, game2.renderScene);
+
 
   // Render top
-  let renderLoop1 = new RenderLoop(game.renderScene);
-  let renderLoop2 = new RenderLoop(game2.renderScene);
+  let renderLoop1 = new RenderLoop(game.renderScene, () => {
+    gui.updateCoordinateTexture(object1._firstVertex);
+  });
+  let renderLoop2 = new RenderLoop(game2.renderScene, () => {
+    gui2.updateCoordinateTexture(object2._firstVertex);
+  });
+
 
 
   // Bottom
@@ -46,9 +56,6 @@ window.addEventListener('DOMContentLoaded', () => {
   let camera3 = new Camera(scene3, 3);
   let camera4 = new Camera(scene4, 3);
 
-  // let gui = GameUtils.createGUI(scene3);
-  // GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI")
-
   // Fill world
   let world3 = new World(scene3, true, false);
   let world4 = new World(scene4, true, false);
@@ -58,9 +65,17 @@ window.addEventListener('DOMContentLoaded', () => {
   let object3 = new Shark(scene3.renderCanvas.engine, scene3.scene, world3.waterMaterial);
   let object4 = new Shark(scene4.renderCanvas.engine, scene4.scene, world4.waterMaterial);
 
+  // Gui
+  let gui3 = new Gui(object3, scene3);
+  let gui4 = new Gui(object4, scene4);
+
   // Render bottom
-  let renderLoop3 = new RenderLoop(scene3);
-  let renderLoop4 = new RenderLoop(scene4);
+  let renderLoop3 = new RenderLoop(scene3, () => {
+    gui3.updateCoordinateTexture(object3._firstVertex);
+  });
+  let renderLoop4 = new RenderLoop(scene4, () => {
+    gui4.updateCoordinateTexture(object4._firstVertex);
+  });
 
 
 });
