@@ -11,7 +11,6 @@ import * as GUI from 'babylonjs-gui';
 import { RenderLoop } from './RenderLoop';
 import { Shark } from './shark';
 import { Gui } from './gui';
-// import { View } from './view';
 
 window.addEventListener('DOMContentLoaded', () => {
   // Set global variable for cannonjs physics engine
@@ -45,10 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Bottom
   let renderCanvas3 = new RenderCanvas('renderCanvas3');
-  // test(renderCanvas3, false);
-
   let renderCanvas4 = new RenderCanvas('renderCanvas4');
-  // test(renderCanvas4, true);
 
   let scene3 = new Scene(renderCanvas3);
   let scene4 = new Scene(renderCanvas4);
@@ -58,7 +54,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Fill world
   let world3 = new World(scene3, true, false);
-  let world4 = new World(scene4, true, false);
+  let world4 = new World(scene4, false, true);
 
 
   // Add Objects
@@ -79,11 +75,3 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 });
-
-function test (renderCanvas, wut) {
-  let scene3 = new Scene(renderCanvas);
-  let camera3 = new Camera(scene3, 3);
-  // Fill world
-  let world3 = new World(scene3, wut, false);
-
-}
