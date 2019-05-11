@@ -10,12 +10,13 @@ export class Shark {
   public _sharkAnimationTime = 0;
   public _firstVertex: any;
 
-  constructor (engine: Engine, scene: Scene) {
+  constructor (engine: Engine, scene: Scene, waterMaterial) {
     scene.registerBeforeRender(() => {
         let deltaTime: number = (1 / engine.getFps());
         this.debugFirstMeshCoordinate(this._sharkMesh as BABYLON.Mesh);
         this.animateShark(deltaTime);
     });
+    this.createShark(scene, waterMaterial);
   }
 
   createShark (scene: Scene, waterMaterial) {

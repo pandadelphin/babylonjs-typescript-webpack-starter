@@ -30,7 +30,7 @@ export class GameUtils {
         let waterMesh = BABYLON.Mesh.CreateGround("waterMesh", 512, 512, 32, scene, false);
         let waterMaterial = GameUtils.createWaterMaterial("water", "./assets/texture/waterbump.png", scene);
         waterMesh.material = waterMaterial;
-        waterMesh.position.y = 4;
+        waterMesh.position.y = 2;
 
         return waterMaterial;
     }
@@ -39,7 +39,7 @@ export class GameUtils {
      * Creates a Gui Texture
      */
     public static createGUI(scene) {
-        return GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"+Math.random());
+        return GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"+Math.random(), true, scene.scene);
     }
 
     /**
