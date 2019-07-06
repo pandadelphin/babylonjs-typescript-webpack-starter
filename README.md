@@ -15,4 +15,4 @@ npm start
 ```
 npm run build
 ```
-2. Deployable app is in dist folder now.
+2. Deployable app is in dist folder now
