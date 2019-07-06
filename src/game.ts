@@ -98,7 +98,7 @@ export class Game {
     animateShark(deltaTime: number): void {
         this.debugFirstMeshCoordinate(this._sharkMesh as BABYLON.Mesh);
         if (this._sharkMesh && this._swim) {
-            this._sharkAnimationTime += 0.01;
+            this._sharkAnimationTime += deltaTime;
             this._sharkMesh.getChildren().forEach(
                 mesh => {
                     let realMesh = <BABYLON.Mesh> mesh;

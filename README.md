@@ -9,3 +9,10 @@ npm install
 npm start
 ```
 3. Open Browser and Enter [http://localhost:8080](http://localhost:8080)
+
+## Deployable Product Build ##
+1.
+```
+npm run build
+```
+2. Deployable App is in dist folder now.

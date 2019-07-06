@@ -1,4 +1,5 @@
 import * as BABYLON from 'babylonjs';
+import * as MATERIAL from 'babylonjs-materials';
 import * as GUI from 'babylonjs-gui';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -25,7 +26,7 @@ export class GameUtils {
      * Creates a second ground and adds a watermaterial to it
      * @param scene
      */
-    public static createWater(scene: BABYLON.Scene): BABYLON.WaterMaterial {
+    public static createWater(scene: BABYLON.Scene): MATERIAL.WaterMaterial {
         // Water
         let waterMesh = BABYLON.Mesh.CreateGround("waterMesh", 512, 512, 32, scene, false);
         let waterMaterial = GameUtils.createWaterMaterial("water", "./assets/texture/waterbump.png", scene);
@@ -211,7 +212,7 @@ export class GameUtils {
      * @param noiseFile
      * @param scene
      */
-    public static createWaterMaterial(name: string, noiseFile: string, scene: BABYLON.Scene): BABYLON.WaterMaterial {
+    public static createWaterMaterial(name: string, noiseFile: string, scene: BABYLON.Scene): MATERIAL.WaterMaterial {
         if (!name) {
             console.error("GameUtils.createWaterMaterial: name is not defined");
             return;
@@ -225,7 +226,7 @@ export class GameUtils {
             return;
         }
         // Water material
-        let water = new BABYLON.WaterMaterial(name, scene);
+        let water = new MATERIAL.WaterMaterial(name, scene);
         water.bumpTexture = new BABYLON.Texture(noiseFile, scene);
         // Water properties
         water.windForce = -15;

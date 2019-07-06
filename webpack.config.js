@@ -4,7 +4,7 @@ const webpack = require('webpack');
 // creates index.html file by a template index.ejs
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // cleans dist folder
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // copies the assets folder into dist folder
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 // output folder location
