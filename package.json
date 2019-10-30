@@ -31,7 +31,7 @@
     "babylonjs-materials": "^4.0.3",
     "cannon": "^0.6.2",
     "earcut": "^2.1.5",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "oimo": "^1.0.9",
     "rxjs": "^6.5.2"
   }
