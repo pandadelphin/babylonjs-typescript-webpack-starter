@@ -13,26 +13,26 @@
   "devDependencies": {
     "@types/es6-shim": "^0.31.39",
     "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^5.0.3",
-    "css-loader": "^3.0.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^3.5.2",
     "html-webpack-plugin": "^3.2.0",
     "imports-loader": "^0.8.0",
     "style-loader": "^0.23.1",
-    "ts-loader": "^6.0.4",
-    "typescript": "^3.5.2",
-    "webpack": "^4.35.2",
-    "webpack-cli": "^3.3.5",
-    "webpack-dev-server": "^3.7.2"
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "babylonjs": "^4.0.3",
-    "babylonjs-gui": "^4.0.3",
-    "babylonjs-loaders": "^4.0.3",
-    "babylonjs-materials": "^4.0.3",
+    "babylonjs": "^4.1.0",
+    "babylonjs-gui": "^4.1.0",
+    "babylonjs-loaders": "^4.1.0",
+    "babylonjs-materials": "^4.1.0",
     "cannon": "^0.6.2",
-    "earcut": "^2.1.5",
-    "lodash": "^4.17.11",
+    "earcut": "^2.2.2",
+    "lodash": "^4.17.15",
     "oimo": "^1.0.9",
-    "rxjs": "^6.5.2"
+    "rxjs": "^6.5.5"
   }
 }
