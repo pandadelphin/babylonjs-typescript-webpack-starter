@@ -18,9 +18,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.ejs'
     }),
-    new CopyWebpackPlugin([
-      { from: 'src/assets', to: 'assets' },
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/assets', to: 'assets' },
+      ]
+    })
   ],
   devtool: 'inline-source-map',
   devServer: {
@@ -44,17 +46,17 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-        cacheGroups: {
-            commons: {
-                test: /[\\/]node_modules[\\/]/,
-                name: "vendors",
-                chunks: "all"
-            }
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all"
         }
+      }
     }
   },
   resolve: {
-    extensions: [ ".tsx", ".ts", ".js" ]
+    extensions: [".tsx", ".ts", ".js"]
   },
   output: {
     filename: '[name].bundle.js',
